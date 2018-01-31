@@ -1,0 +1,28 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+
+<h1>Envio de Transação</h1>
+<h2>Página em construção</h2>
+<p><img src="~/Content/img/construcao626x626.jpg" /></p>
+
+

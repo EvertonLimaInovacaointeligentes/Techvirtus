@@ -1,0 +1,42 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+<h2>Detalhes da Empresa</h2>
+<p>
+    <label for="cnpj">CNPJ:@ViewBag.Empresa.Cnpj</label>                  
+</p>
+<p>
+    <label for="cnpj">Nome Fantasia:@ViewBag.Empresa.Fantasia</label>
+</p>
+<p>
+    <label for="cnpj">Razão Social:@ViewBag.Empresa.RazaoSocial</label>
+</p>
+<p>
+    <label for="cnpj">Logradouro:@ViewBag.Empresa.Logradouro</label>
+</p>
+<p>
+    <label for="cnpj">Numero:@ViewBag.Empresa.Numero</label>
+</p>
+<p>
+    <label for="cnpj">Cep:@ViewBag.Empresa.Cep</label>      
+</p>
+<p>@Html.RouteLink("Voltar para Página de Cadastro Empresa", "todasEmpresas");</p>

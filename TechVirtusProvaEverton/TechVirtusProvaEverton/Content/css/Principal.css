@@ -1,0 +1,41 @@
+﻿/*Linha do rodapé da pagina*/
+#linha {
+    margin-top:40%;
+}
+/*pagina Sobre*/
+#sobre{
+	margin-top:10%;
+}
+/*Pagina contato*/
+#contato{
+	margin-top:10%;
+}
+.conteudo
+{
+	margin-left: 34em;
+	margin-top: 10em;
+}
+#conteudo{	
+	position:absolute;
+	top:0%;
+	left:25%;
+	
+}
+.contaner
+{
+	position:relative;
+}
+#conteudoInicio{
+	margin-top:5%;
+}
+#conteudoPagina
+{
+	margin-top:10%;
+}
+#espacoPrincipal{
+	padding-bottom:10%;
+}
+footer p{
+	text-align:center;
+}
+

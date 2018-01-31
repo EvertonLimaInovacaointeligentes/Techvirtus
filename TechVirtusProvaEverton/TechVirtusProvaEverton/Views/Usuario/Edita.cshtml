@@ -1,0 +1,84 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+@model TechVirtusProvaEverton.Models.Usuario
+<h2>@ViewBag.Tela</h2>
+<form method="post" action="/Usuario/Adiciona/">
+    @Html.AntiForgeryToken()
+    <p>
+        <label for="codigo">Codigo:@Model.Id</label>
+        <input type="hidden" value="@Model.Id" id="usuario.Id" name="usuario.Id"/>
+    </p>
+    <p>
+        <label for="Nome">Nome:</label>
+        <input type="text" id="usuario.Nome" name="usuario.Nome" value="@Model.Nome" class="form-control" placeholder="Digite o Nome"/>
+        <span class="validacao"> @Html.ValidationMessage("usuario.Nome")</span>
+</p>
+    <p>
+        <label for="Login">Login:</label>
+        <input type="text" id="usuario.Login" name="usuario.Login" value="@Model.Login" class="form-control" placeholder="Digite o Login" />
+        <span class="validacao"> @Html.ValidationMessage("usuario.Login")</span>
+    </p>
+    <p>
+        <label for="Email">E-mail:</label>
+        <input type="text" id="usuario.Email" name="usuario.Email" value="@Model.Email" class="form-control" placeholder="Digite o Email"/>
+        <span class="validacao">@Html.ValidationMessage("usuario.Email")</span>
+</p>
+    <p>
+        <label for="Senha">Senha:</label>
+        <input type="password" id="usuario.Senha" name="usuario.Senha" value="@Model.Senha" class="form-control" placeholder="Digite a Senha"/>
+        <span class="validacao"> @Html.ValidationMessage("usuario.senha")</span>
+    </p>
+    <p>            
+        <label for="tipo">TipoPessoa</label>
+        <select id="tipo" name="usuario.TipoPessoaId" class="form-control">
+            @foreach (var tipo in ViewBag.TipoPessoa)
+            {                
+                
+                <option value="@tipo.Id" selected="@tipo.Id.Equals(Model.TipoPessoaId)">@tipo.Tipo</option>
+            }
+        </select>                
+      </p>
+       <p>          
+               @{ 
+                   TechVirtusProvaEverton.DAO.PerfilDAO perfilDao = new TechVirtusProvaEverton.DAO.PerfilDAO();
+                   IList<TechVirtusProvaEverton.Models.Perfil> perfil = perfilDao.Lista();
+                   ViewBag.Perfil = perfil;
+               }
+                <label for="tipo">Perfil Usuario:</label>
+           <select id="tipo" id="usuario.PerfilId" name="usuario.PerfilId" class="form-control">
+               @foreach (var perfilUsuario in ViewBag.Perfil)
+               {
+
+                   <option value="@perfilUsuario.Id" selected="@perfilUsuario.Id.Equals(Model.PerfilId)">@perfilUsuario.TipoAcesso </option>
+
+               }
+           </select>
+        </p>        
+      <p>
+        <input value="Salvar" type="submit" class="btn btn-primary"/>        
+      </p>
+      <p>
+        @Html.RouteLink("Voltar Lista de Usuários", "todosUsuarios")
+      </p>
+</form>
+

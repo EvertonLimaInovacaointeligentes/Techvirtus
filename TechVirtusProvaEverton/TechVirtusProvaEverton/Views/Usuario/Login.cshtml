@@ -1,0 +1,39 @@
+﻿@{ 
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model TechVirtusProvaEverton.Models.Usuario
+
+<h1>Acesso</h1>
+<h2>Perfil Administrador</h2>
+<p>Usuario: teste Senha: teste</p>
+<h2>Perfil Analista</h2>
+<p>Usuario: teste2 senha: teste2</p>
+<h2>Perfil Cliente</h2>
+<p>Usuario:teste3 Senha:teste3</p>
+
+
+<form method="post" action="/Usuario/Acesso" class="conteudo">
+    @Html.AntiForgeryToken()
+    @Html.ValidationMessage("Usuario.Invalido")
+    <p>
+        <label for="login">Login:</label>
+        
+        @Html.ValidationMessageFor(m=>m.Login, "*Campo Login Usuário é Obrigatório", new { @class = "text-danger" })
+        <input id="usuario.Login" name="usuario.Login" class="form-control" type="text" placeholder="Digite seu Login"/>
+    </p>
+    <p>
+        <label for="senha">Senha:</label>
+        
+        @Html.ValidationMessageFor(m=>m.Senha, "*Campo Senha Usuário é Obrigatório", new { @class="text-danger"})
+        <input id="usuario.Senha" name="usuario.Senha" class="form-control" type="password" placeholder="Digite sua Senha" />
+    </p>
+    <p>
+        <label for="esqueceuSenha">@Html.ActionLink("Esqueceu sua Senha?","Lembrete","Usuario")</label>
+    </p>
+    <p>
+        <input type="submit" value="Acessar"class="btn btn btn-primary" />
+    </p>
+
+</form>
+

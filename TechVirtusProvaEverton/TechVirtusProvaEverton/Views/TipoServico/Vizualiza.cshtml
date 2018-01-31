@@ -1,0 +1,38 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+
+<h2>Detalhes do Serviço</h2>
+
+
+    <p>
+        <label for="Descricao">Descricação do Serviço:@ViewBag.TipoServico.NomeServico</label>        
+    </p>
+    <p>
+        <label for="Valor">Valor do Servico:@ViewBag.TipoServico.ValorServico</label>
+    </p>
+<p>
+    @Html.RouteLink("Voltar para Cadastro Serviços", "todosServ")
+</p>
+
+
+

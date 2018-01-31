@@ -1,0 +1,41 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+<h2>Detalhe do Usuario</h2>
+
+<div id="conteudoVisualizaUsuario">
+<p>
+    <label for="nome">Codigo:</label>
+    @ViewBag.Usuario.Id
+</p>
+<p>
+    <label for="nome">Login:</label>
+    @ViewBag.Usuario.Login
+</p>
+<p>
+    <label for="nome">Nome:</label>
+    @ViewBag.Usuario.Nome
+</p>
+   
+</div>
+<!--<p>Html.ActionLink("Voltar para Cadastro Usuário","Index","Usuario")</p>-->
+<p>@Html.RouteLink("Voltar para Cadastro Usuário","todosUsuarios")</p>

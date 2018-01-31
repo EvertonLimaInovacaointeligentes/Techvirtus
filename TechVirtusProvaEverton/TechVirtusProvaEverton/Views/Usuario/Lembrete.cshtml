@@ -1,0 +1,17 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Lembrete.cshtml";
+}
+
+<h2>Lembrete</h2>
+
+<form method="post" action="/Usuario/Enviar">
+    <p>
+        <label for"email">E-mail:</label>
+        <input type="text" class="form-control" id="email" name="email" placeholder="Digite seu Email para lembrete de senha" />
+    </p>
+    <p>
+        <input type="submit" value="Enviar E-mail" class="btn btn-primary" />
+    </p>
+
+</form>

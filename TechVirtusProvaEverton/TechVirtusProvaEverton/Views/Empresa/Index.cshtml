@@ -1,0 +1,58 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+@model IList<TechVirtusProvaEverton.Models.Empresa>
+<h2>Empresa</h2>
+
+<a href="/formularioEmpresa/"><img src="~/Content/img/AddUser36X36.png" /></a>
+<table class="table table-responsive table-striped table-bordered table-condensed" >
+    <thead>
+        <tr>
+            <th class="cabecalho">Codigo</th>
+            <th class="cabecalho">Fantasia</th>
+            <th class="cabecalho">Razão Social</th>
+            <th class="cabecalho">Logradouro</th>
+            <th class="cabecalho">Serviço</th>
+            <th class="cabecalho" colspan="3">Propriedades</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--Estanciado tipo dao de serviços para poder localizar o tipo de servico pelo id empresa.TipoServicoId-->
+       @{ TechVirtusProvaEverton.DAO.TipoServicoDAO tipodao = new TechVirtusProvaEverton.DAO.TipoServicoDAO();}
+        
+        @foreach (var empresa in Model)
+        {                                        
+            <tr>
+                <td>@empresa.Id</td>
+                <td>@empresa.Fantasia</td>
+                <td>@empresa.RazaoSocial</td>
+                <td>@empresa.Logradouro</td>                
+                <td>@tipodao.BuscarPorId(Convert.ToInt32(empresa.TipoServicoId)).NomeServico</td>
+                <td><a href="/atualizaEmpresa/@empresa.Id"><img src="~/Content/img/editarUser36X36.png" /> </a></td>
+                <td><a href="/removeEmpresa/@empresa.Id"><img src="~/Content/img/removerUser36X36.png" /></a></td>
+                <td><a href="/empresas/@empresa.Id"><img src="~/Content/img/buscarUser36X36.png" /></a></td>
+            </tr>
+        }
+    </tbody>
+    
+</table>
+

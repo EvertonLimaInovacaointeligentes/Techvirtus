@@ -1,0 +1,92 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+
+@model TechVirtusProvaEverton.Models.Empresa
+
+
+<h2>@ViewBag.Tela</h2>
+<form method="post" action="/Empresa/Adicionar/">
+    @Html.AntiForgeryToken()
+    <span class="validacao"> @Html.ValidationMessage("Dados.Invalidos")</span>
+    <p>
+        <label for="id">Codigo: @Model.Id</label>
+        <input id="empresa.Id" name="empresa.Id" class="form-control " value="@Model.Id" type="hidden" />
+    </p>
+    <p>
+        <label for="tipoServico">CNPJ: </label>
+        <input id="empresa.Cnpj" name="empresa.Cnpj" placeholder="Digite o CNPJ" class="form-control" value="@Model.Cnpj" type="text" style="width:280px;" />
+        <span class="validacao">    @Html.ValidationMessage("empresa.Cnpj")</span>
+   </p>
+    <p>
+        <label for="valor">Nome Fantasia: </label>
+        <input type="text" id="empresa.Fantasia" name="empresa.Fantasia" placeholder="Digite o nome Fantasia" class="form-control campotexto" value="@Model.Fantasia"  />
+        <span class="validacao">@Html.ValidationMessage("empresa.Fantasia")</span>
+   </p>
+    <p>
+        <label for="valor">Razão Social: </label>
+        <input type="text" id="empresa.RazaoSocial" name="empresa.RazaoSocial" placeholder="Digite a Razão Social" class="form-control campotexto" value="@Model.RazaoSocial"  />
+        <span class="validacao">@Html.ValidationMessage("empresa.RazaoSocial")</span>
+   </p>
+    <p>
+        <label for="logradouro">Logradouro: </label>
+        <input type="text" id="empresa.Logradouro" name="empresa.Logradouro" placeholder="Digite o Endereço" class="form-control campotexto" value="@Model.Logradouro" />
+        <span class="validacao">@Html.ValidationMessage("empresa.Logradouro")</span>
+   </p>
+    <p>
+        <label for="numero">Numero: </label>
+        <input type="text" id="empresa.Numero" name="empresa.Numero" placeholder="Digite o Numero" class="form-control" value="@Model.Numero"  />
+        <span class="validacao">@Html.ValidationMessage("empresa.Numero")</span>
+   </p>
+    <p>
+        <label for="cep">Cep: </label>
+        <input type="text" id="empresa.Cep" name="empresa.Cep" placeholder="Digite o Cep" class="form-control" value="@Model.Cep" style="width:150px;" />
+        <span class="validacao">@Html.ValidationMessage("empresa.Cep")</span>
+</p>
+    <p>
+        @{
+            TechVirtusProvaEverton.DAO.TipoServicoDAO daoTipoServico = new TechVirtusProvaEverton.DAO.TipoServicoDAO();
+            
+            ViewBag.TipoServico = daoTipoServico.Lista();
+        }
+      @if (!ViewBag.TipoServico.Equals(null))
+      {
+         
+        <label for="tiposervico">Serviço:</label>
+        <select id="tipo" name="empresa.TipoServicoId" class="form-control">
+            @foreach (var tipo in ViewBag.TipoServico)
+            {
+
+                <option value="@tipo.Id" selected="@tipo.Id.Equals(Model.TipoServicoId)">@tipo.NomeServico</option>
+                
+            }
+        </select>
+      }
+    </p>
+       
+    <p>
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+    </p>
+    <p>@Html.RouteLink("Cadastrar Serviço", "formularioServ")</p>
+</form>
+
+

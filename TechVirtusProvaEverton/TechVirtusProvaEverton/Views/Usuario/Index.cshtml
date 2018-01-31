@@ -1,0 +1,56 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+@model IList<TechVirtusProvaEverton.Models.Usuario>
+
+<h1>Cadastro Usuário</h1>
+<a href="/formularioUsuario/"><img src="~/Content/img/AddUser36X36.png" /></a>
+<table id="tabelaUsuario" class="table table-responsive table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th class="cabecalho">Nome</th>
+            <th class="cabecalho">Login</th>
+            <th class="cabecalho">E-mail</th>
+            <th class="cabecalho">Perfil</th>
+            <th class="cabecalho" colspan="3">Propriedades</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            TechVirtusProvaEverton.DAO.PerfilDAO perfilDao = new TechVirtusProvaEverton.DAO.PerfilDAO();
+        }
+
+        @foreach (var usuario in Model)
+        {
+            <!--<option value="tipo.Id" selected="tipo.Id.Equals(Model.TipoServicoId)">tipo.NomeServico</option>-->
+            <tr>
+                <td>@usuario.Nome</td>
+                <td>@usuario.Login</td>
+                <td>@usuario.Email</td>
+                <td>@perfilDao.BuscarPorId(Convert.ToInt32(usuario.PerfilId)).TipoAcesso</td>
+                <td><a href="/atualizaUsuario/@usuario.Id"><img src="~/Content/img/editarUser36X36.png"  /> </a></td>
+                <td><a href="/removeUsuario/@usuario.Id"><img src="~/Content/img/removerUser36X36.png" /></a></td>
+                <td><a href="/usuarios/@usuario.Id"><img src="~/Content/img/buscarUser36X36.png" /></a></td>                
+            </tr>
+        }
+    </tbody>
+</table>

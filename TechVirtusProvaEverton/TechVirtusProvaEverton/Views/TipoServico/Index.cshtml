@@ -1,0 +1,50 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+
+<h2>Tipos de Serviços</h2>
+<p><a href="/formularioServico/"><img src="~/Content/img/addServico36X36.png"></a></p>
+
+
+
+<table class="table table-responsive table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="cabecalho">Descrição do Servico</th>
+            <th class="cabecalho">Valor do Serviço</th>
+            <th class="cabecalho" colspan="3">Propriedades</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tipo in ViewBag.TipoServico)
+        {
+            <tr>
+                <td>@tipo.NomeServico</td>
+                <td>@tipo.ValorServico</td>
+                <td><a href="/atualizaTipoServico/@tipo.Id"><img src="~/Content/img/EditServico36X36.png" /> </a></td>
+                <td><a href="/removeTipoServico/@tipo.Id"><img src="~/Content/img/removerServico36X36.png" /></a></td>
+                <td><a href="/tiposServicos/@tipo.Id"><img src="~/Content/img/buscaServico36X36.png" /></a></td>   
+            </tr>
+        }
+    </tbody>
+</table>
+

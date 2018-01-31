@@ -1,0 +1,46 @@
+﻿@{
+    object usuarioSessao = Session["usuarioLogado"];
+    TechVirtusProvaEverton.Models.Usuario user = (TechVirtusProvaEverton.Models.Usuario)usuarioSessao;
+
+    switch (user.PerfilId)
+    {
+        case 1:
+            ViewBag.Layout = "~/Views/Shared/_Principal.cshtml";
+            break;
+        case 2:
+            ViewBag.Layout = "~/Views/Shared/_Analista.cshtml";
+            break;
+        case 3:
+            ViewBag.Layout = "~/Views/Shared/_Cliente.cshtml";
+            break;
+        default:
+            ViewBag.Layout = "~/Views/Shared/_Layout.cshtml";
+            break;
+    }
+
+    Layout = ViewBag.Layout;
+}
+@model TechVirtusProvaEverton.Models.TipoServico
+
+<h2>@ViewBag.Tela</h2>
+<form method="post" action="/TipoServico/Adiciona/">
+    @Html.AntiForgeryToken()
+   <span class="validacao">  @Html.ValidationMessage("tipoServico.Invalido")</span>
+    <p>
+        <label for="id">Codigo: @Model.Id</label>
+        <input id="tipo.Id" name="tipo.Id" class="form-control" value="@Model.Id" type="hidden"/>
+    </p>
+    <p>
+        <label for="tipoServico">Tipo Serviço: </label>
+        <input id="tipo.NomeServico" name="tipo.NomeServico" placeholder="Digite a descrição do serviço" class="form-control" value="@Model.NomeServico" type="text" style="width:280px;"/>
+        <span class="validacao">@Html.ValidationMessage("tipo.NomeServico")</span>
+    </p>
+    <p>
+        <label for="valor">Valor: </label>
+        <input type="text" id="tipo.ValorServico" name="tipo.ValorServico" placeholder="Dite o valor do servico" class="form-control" value="@Model.ValorServico" style="width:150px;"/>
+        <span class="validacao">@Html.ValidationMessage("tipo.ValorServico")</span>
+    </p>
+    <p>
+        <input type="submit" value="Salvar" class="btn btn-primary"  />
+    </p>
+</form>
